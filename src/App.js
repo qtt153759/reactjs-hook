@@ -3,6 +3,9 @@ import logo from "./logo.svg";
 import "./App.css";
 import Nav from "./views/Nav";
 import Todo from "./views/Todo";
+import Covid from "./views/Covid";
+import CountDown from "./views/Countdown";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 //Phiên bản react 17 không cần import react nữa
 function App() {
     //dùng arrow cx được (ko có class extend component)
@@ -36,32 +39,55 @@ function App() {
         current = current.filter((item) => item.id !== id);
         setTodos(current);
     };
+    const onTimesup = () => {
+        alert("Time up!");
+    };
     return (
-        <div className="App">
-            <Nav />
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <p>Welcome {name}!</p>
-                <Todo
-                    todos={todos}
-                    title={"Alltodo"}
-                    handleDeleteTodo={handleDeleteTodo}
-                />
+        <Router>
+            <div className="App">
+                <header className="App-header">
+                    <Nav />
+                    <img src={logo} className="App-logo" alt="logo" />
+                    <p>Welcome {name}!</p>
+
+                    {/* 
                 <Todo
                     todos={todos.filter((item) => item.type === "type2")}
                     title={"Alltodo"}
                     handleDeleteTodo={handleDeleteTodo}
-                />
-                <input
-                    type="text"
-                    value={address}
-                    onChange={(event) => handleOnchangeInput(event)}
-                />
-                <button type="button" onClick={() => handleEventClick()}>
-                    Click me
-                </button>
-            </header>
-        </div>
+                /> */}
+                </header>
+                <div>
+                    <Switch>
+                        {/* Switch sẽ lấy link đầu tiên phù hợp => để lấy chính xác "/" thì thêm exact để tránh ghi đè */}
+                        <Route path="/" exact>
+                            <Covid />
+                        </Route>
+                        <Route path="/timer">
+                            <CountDown onTimesup={onTimesup} />
+                        </Route>
+                        <Route path="/todo">
+                            <Todo
+                                todos={todos}
+                                title={"Alltodo"}
+                                handleDeleteTodo={handleDeleteTodo}
+                            />
+                            <input
+                                type="text"
+                                value={address}
+                                onChange={(event) => handleOnchangeInput(event)}
+                            />
+                            <button
+                                type="button"
+                                onClick={() => handleEventClick()}
+                            >
+                                Click me
+                            </button>
+                        </Route>
+                    </Switch>
+                </div>
+            </div>
+        </Router>
     );
 }
 
