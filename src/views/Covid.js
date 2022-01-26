@@ -4,15 +4,21 @@ import useFetch from "../customize/fetch";
 import "./Covid.scss";
 import moment from "moment";
 const Covid = () => {
-    let today = new Date(new Date().setHours(0, 0, 0, 0));
-    const priorDate = moment().subtract(1, "months");
+    // let today = new Date(new Date().setHours(0, 0, 0, 0)); để kiểu này thì today động, load đi load lại
+    const today = moment().startOf("day").toISOString(true);
+    // const priorDate = today.subtract(1, "months"); nếu lấy ntn thì today=priotDate=(today-1)=> 2 ngày là 1
+    const priorDate = moment()
+        .startOf("day")
+        .subtract(1, "months")
+        .toISOString(true);
     //tái sử dụng hook
     const {
         data: covidData, //data của useFetch lại ở trước, còn covidData muốn gán lại ở sau=>hơi ngược
         isLoading,
         isError,
     } = useFetch(
-        `https://api.covid19api.com/country/vietnam?from=${priorDate.toISOString()}T00%3A00%3A00Z&to=${today.toISOString()}T00%3A00%3A00Z`
+        `https://api.covid19api.com/country/vietnam?from=${priorDate}&to=${today}`,
+        true
     );
 
     return (

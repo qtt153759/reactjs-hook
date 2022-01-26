@@ -5,6 +5,8 @@ import Nav from "./views/Nav";
 import Todo from "./views/Todo";
 import Covid from "./views/Covid";
 import CountDown from "./views/Countdown";
+import DetailBlog from "./views/DetailBlog";
+import Blog from "./views/Blog";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 //Phiên bản react 17 không cần import react nữa
 function App() {
@@ -40,7 +42,7 @@ function App() {
         setTodos(current);
     };
     const onTimesup = () => {
-        alert("Time up!");
+        // alert("Time up!");
     };
     return (
         <Router>
@@ -83,6 +85,13 @@ function App() {
                             >
                                 Click me
                             </button>
+                        </Route>
+                        {/* /blog phải exact nếu không /blog/:id sẽ ko ăn */}
+                        <Route path="/blog" exact>
+                            <Blog />
+                        </Route>
+                        <Route path="/blog/:id">
+                            <DetailBlog />
                         </Route>
                     </Switch>
                 </div>
