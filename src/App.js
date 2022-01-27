@@ -7,7 +7,9 @@ import Covid from "./views/Covid";
 import CountDown from "./views/Countdown";
 import DetailBlog from "./views/DetailBlog";
 import Blog from "./views/Blog";
+import AddNewBlog from "./views/AddNewBlog";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import NotFound from "./views/NotFound";
 //Phiên bản react 17 không cần import react nữa
 function App() {
     //dùng arrow cx được (ko có class extend component)
@@ -92,6 +94,13 @@ function App() {
                         </Route>
                         <Route path="/blog/:id">
                             <DetailBlog />
+                        </Route>
+                        <Route path="/add-new-blog">
+                            <AddNewBlog />
+                        </Route>
+                        {/* Route của NotFound phải đặt cuối cùng */}
+                        <Route path="*">
+                            <NotFound />
                         </Route>
                     </Switch>
                 </div>
